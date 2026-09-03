@@ -6,15 +6,20 @@ import java.util.Scanner;
 
 
 public class CharSheet{
+    private int[][] abilityScores = new int[6][7];  //str, dex, con, int, wis, cha, and subabilities
+    private int[] spellSlots = new int[9];           //total spell slots from 1 to 9
+    private int[] classLevels = new int[13];        //levels for all the classes
     private String name;
-    private int[] classLevels = new int[13];
-    private int[][] abilityScores = new int[6][7];
-    private int[][] spellSlots = new int[20][9];
-    private int totalLevels;
-    private int profBonus;
-    private ArrayList<Item> equippedGear = new ArrayList<Item>();
-    private ArrayList<Item> inventory = new ArrayList<Item>();
-    private Attribute race, clas, bg;
+    private int maxHP, currHP;
+    private int totalLevel;                          //summation of class levels
+    private int profBonus;                          //bonus to proficient skills based on level
+    private int armorClass;                         //threshold to exceed to enable hits
+    private int initiative;
+    private int speed;
+    private ArrayList<String> attackOptions = new ArrayList<String>();  //may replace with
+    private ArrayList<Item> equippedGear = new ArrayList<Item>();   //weapons, armor, etc... equipped at the moment
+    private ArrayList<Item> inventory = new ArrayList<Item>();      //all items stored in the backpack, inactive
+    private Attribute race, clas, bg;               //attributes intrinsic to the character, sets of modifiers to be activated for rolls
 
     public static void main(String[] args){
     //command line argument parsing
