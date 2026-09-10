@@ -1,10 +1,13 @@
+import java.util.UUID;
 public class Modifier{
     public Modifier(){
     }
+    private final UUID modifierID = UUID.randomUUID();
     private boolean active = true;  //is active for the roll (won't need to edit )
     private int value = 0;          //value, severity, saturation. All synonyms for this idea of presence. Boolean of binary-style modifiers (e.g: greatsword proficiency). Applies proficiency modifier.
     private int relevStat;          //which stat is being affected
-    private String name = "";
+    private String name;
+    
 
     public String getName(){
         return this.name;
@@ -27,10 +30,20 @@ public class Modifier{
     public void toggleActive(){
         this.active = !this.active;
     }
+    public UUID getModID(){
+        return this.modifierID;
+    }
     public int getRelStat(){
         return this.relevStat;
     }
     public void setRelStat(int relevStat){
         this.relevStat=relevStat;
+    }
+    @Override
+    public String toString(){
+        String outString = name + "\n";
+        //will parse relevant stat eventually (hard code or database), for now keep as int value
+        outString += (relevStat + ": " + value);
+        return outString;
     }
 }

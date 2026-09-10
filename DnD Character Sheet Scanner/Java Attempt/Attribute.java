@@ -1,58 +1,53 @@
 import java.util.ArrayList;
+import java.util.UUID;
+//for database?
+//Classes: O is Barbarian, 1 is bard, 2 is cleric, ..., 11 is wizard
+//Races: 12 is Aasimar, 13 is dragonborn, 14 is dwarf, ..., 21 is Tiefling
+//Backgrounds: 22 is Acolyte, 23 is Artisan, 24 is Charlatan, ..., 37 is Wayfarer
+//Feats: 38 is Ability Score Improvement, 39 is Actor, 40 is Alert, ..., 11o is Weapon Master
 
 public class Attribute{
+    private final UUID attrID = UUID.randomUUID();    
+    private String name;
+    private String desc;
+    private String src;
     private ArrayList<Modifier> modifiers = new ArrayList<Modifier>();
-    private String name = "";
-    private String desc = "";
-    private String src = "";
-    private String prereq = "";
-    private int uses;
-    private int attrID;
 
-    public Attribute(String name, int uses, int attrID){
-        this.name = name;
-        this.uses = uses;
-        this.attrID = attrID;
+    public Attribute(){
     }
-    public Attribute(String name, int uses, int attrID, Modifier[] modifiers){
+    public Attribute(String name){
         this.name = name;
-        this.uses = uses;
-        this.attrID = attrID;
+    }
+    public Attribute(String name, String desc, String src, Modifier[] modifiers){
+        this.name = name;
+        this.desc = desc;
+        this.src = src;
         for(int i = 0; i < modifiers.length;i++){
             this.modifiers.add(modifiers[i]);
         }
     }
-
+    //name
     public String getName(){
         return this.name;
     }
     public void setName(String name){
         this.name = name;
     }
-    public int getUses(){
-        return this.uses;
-    }
-    public void setUses(int uses){
-        this.uses = uses;
-    }
+    //desc
     public String getDesc(){
         return this.desc;
     }
     public void setDesc(String desc){
         this.desc=desc;
     }
+    //source/origin
     public String getSource(){
         return this.src;
     }
     public void setSource(String src){
         this.src=src;
     }
-    public String getPreReqs(){
-        return this.prereq;
-    }
-    public void setPreReqs(String prereq){
-        this.prereq=prereq;
-    }
+    //modifiers of the attr
     public ArrayList<Modifier> getModifiers(){  //provides copies for use(modification or standard usage)
         return new ArrayList<Modifier>(modifiers);
     }
@@ -75,17 +70,26 @@ public class Attribute{
             }
         }
     }
-    public int getAttrID(){
+    //ID to be replaced w/ database ID
+    public UUID getAttrID(){
         return this.attrID;
     }
-    public void setAttrID(int attrID){
-        this.attrID = attrID;
-    }
-
-    public void applyAttrMods(){
+    //get and apply Attr (somehow)
+    public int applyAttrMods(int relevantStat){
+        int rollModifier = 0;
         for(int i = 0; i<modifiers.size(); i++){
-            modifiers.get(i).getRelStat();
-            modifiers.get(i).getValue();
+            if(relevantStat == modifiers.get(i).getRelStat()){
+                i += modifiers.get(i).getValue();
+            }
         }
+        return rollModifier;
+    }
+    @Override
+    public String toString(){
+        String outString = name + "\n" + desc + "\nFrom: " + src + "\n";
+        for(int i = 0; i<modifiers.size(); i++){
+            outString += (modifiers.get(i) + "\n");
+        }
+        return outString;
     }
 }

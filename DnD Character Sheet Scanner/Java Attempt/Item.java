@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Item{
+    private final UUID itemID = UUID.randomUUID();
     private boolean active = true;
     private String name;
     private ArrayList<Modifier> modifiers = new ArrayList<Modifier>();
@@ -35,5 +37,8 @@ public class Item{
     }
     public void toggleActive(){
         this.active = !this.active;
+    }
+    public UUID getItemID(){
+        return this.itemID;
     }
 }
